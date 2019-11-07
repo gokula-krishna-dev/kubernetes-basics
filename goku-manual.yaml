@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: goku-manual-v2 # pod name
+  labels:
+    creation_method: manual
+    env: prod
+spec:
+  containers:
+  - image: gokulakrishna/docker-training
+    name: goku # container name
+    ports:
+    - containerPort: 8080
+      protocol: TCP

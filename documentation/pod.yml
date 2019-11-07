@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-service
+  labels:
+    app: first-app-bots
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: first-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: first-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: first-app
+    spec:
+      containers:
+      - name: bot-container
+        image: docker.io/gokulakrishna/binary-bot:62148a0ff665da4c8a41c5c35544842df987608e
+        ports:
+        - containerPort: 80
+

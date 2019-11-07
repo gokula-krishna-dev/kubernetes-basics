@@ -1,0 +1,27 @@
+## Create a deployment
+kubectl create deployment binary-bot --image=docker.io/gokulakrishna/binary-bot:62148a0ff665da4c8a41c5c35544842df987608e
+
+## Get all deployments 
+kubectl get deployments
+
+## Get all pods
+kubectl get pods
+
+## Get pods corresponding to deployments
+kubectl get pods --selector=app=hello-node 
+
+## Create a service. The port should be the one used by the app. Eg 80 for nginx
+kubectl expose deployment binary-bot --type=LoadBalancer --port=80
+
+## View kubernetes config
+kubectl config view   
+
+## Get all services
+kubectl get services 
+
+## Delete
+kubectl delete deployment <deployment-name>
+kubectl delete service <service-name>
+
+## Minikube open url for service
+minikube service <kubectl-service-name>
