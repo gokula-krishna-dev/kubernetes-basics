@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: goku-manual-unhealthy # pod name
+  labels: # to group resources so bulk operations can be done
+    creation_method: manual
+    env: prod
+spec:
+  containers:
+  - image: luksa/kubia-unhealthy
+    name: goku-container # container name
+    livenessProbe: # kubernetes will restart if the 8080 responds with codes other than 2xx or 3xx
+      httpGet:
+        path: /
+        port: 8080
+      initialDelaySeconds: 15 # start the initial check after 15 seconds
+    ports: # letting know kubernetes that container listens on this port
+    - containerPort: 8080
+      protocol: TCP
