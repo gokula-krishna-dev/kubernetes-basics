@@ -5,9 +5,10 @@ metadata:
   labels: # to group resources so bulk operations can be done
     creation_method: manual
     env: prod
+    app: kubia
 spec:
   containers:
-  - image: luksa/kubia-unhealthy
+  - image: luksa/kubia
     name: goku-container # container name
     livenessProbe: # kubernetes will restart if the 8080 responds with codes other than 2xx or 3xx
       httpGet:
