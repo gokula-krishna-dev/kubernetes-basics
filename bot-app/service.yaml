@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: binary-bot-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bot
+  template:
+    metadata:
+      labels:
+        app: bot
+    spec:
+      containers:
+      - image: gokulakrishna/binary-bot:62148a0ff665da4c8a41c5c35544842df987608e
+        imagePullPolicy: Always
+        name: binary-bot-container
+        ports:
+        - containerPort: 80
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: binary-bot-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: bot
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: bot-ingress
+spec:
+  rules:
+  - host: hello-world.info
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: binary-bot-service
+          servicePort: 80
