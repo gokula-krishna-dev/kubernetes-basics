@@ -6,9 +6,22 @@ metadata:
     creation_method: manual
     env: prod
 spec:
+  hostNetwork: true
   containers:
+  - name: ambassador
+    image: luksa/kubectl-proxy:1.6.2
+    securityContext:
+      runAsNonRoot: yes
   - image: gokulakrishna/docker-training
     name: goku # container name
+    securityContext:
+      runAsNonRoot: yes
     ports:
     - containerPort: 8080
       protocol: TCP
+    # Downward API example
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name

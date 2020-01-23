@@ -10,9 +10,18 @@ spec:
     name: web-server
     volumeMounts:
     - name: config
-      mountPath: /etc/nginx/conf.d
+      mountPath: /etc/nginx/conf.d/sass
+      subPath: nginx
+      readOnly: true
+    volumeMounts:
+    - name: secret
+      mountPath: /etc/nginx/conf.d/dos
+      subPath: dock
       readOnly: true
   volumes:
   - name: config
     configMap:
       name: sample
+  - name: secret
+    secret:
+      secretName: sample-secret
